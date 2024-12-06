@@ -1,14 +1,21 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
-import { ExploreContainerComponent } from '../explore-container/explore-container.component';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent],
+  imports: [IonicModule, FormsModule],
 })
 export class Tab1Page {
-  constructor() {}
+  textInput: string = '';
+  rangeValue: number = 16;
+  selectedColor: string = 'black';
+  isToastOpen: boolean = false;
+
+  showToast() {
+    this.isToastOpen = true;
+  }
 }
