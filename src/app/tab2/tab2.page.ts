@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Device } from '@capacitor/device'; // Importiere Device Plugin
+import { Network } from '@capacitor/network';
 import { IonicModule } from '@ionic/angular';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 
@@ -10,18 +11,30 @@ import { ExploreContainerComponent } from '../explore-container/explore-containe
   standalone: true,
   imports: [IonicModule, ExploreContainerComponent],
 })
-export class Tab2Page {
+export class Tab2Page implements OnInit {
   batteryLevel: number = 0;
   isCharging: boolean = false;
+  networkStatus: string = 'Unbekannt'; // Initialer Status
 
   constructor() {
     // Hole den Akku-Status bei der Initialisierung
     this.getBatteryStatus();
 
-    // Setze ein Intervall, um den Status alle 5 Sekunden zu aktualisieren
+    // Setze ein Intervall, um den Akku-Status alle 5 Sekunden zu aktualisieren
     setInterval(() => {
       this.getBatteryStatus();
     }, 5000); // alle 5000ms (5 Sekunden)
+  }
+
+  ngOnInit() {
+    // Listener für Netzwerkstatusänderungen
+    Network.addListener('networkStatusChange', (status) => {
+      console.log('Network status changed:', status);
+      this.networkStatus = status.connected ? 'Online' : 'Offline';
+    });
+
+    // Initialen Netzwerkstatus abrufen
+    this.logCurrentNetworkStatus();
   }
 
   async getBatteryStatus() {
@@ -35,5 +48,11 @@ export class Tab2Page {
     } catch (error) {
       console.error('Fehler beim Abrufen des Akku-Status', error);
     }
+  }
+
+  async logCurrentNetworkStatus() {
+    const status = await Network.getStatus();
+    console.log('Current Network status:', status);
+    this.networkStatus = status.connected ? 'Online' : 'Offline';
   }
 }
