@@ -20,6 +20,7 @@ export class NewPage {
     'CrossFit Bern',
   ];
   photoUrl: string | null = null;
+  comment: string = '';
 
   constructor(private logsService: LogsService) {}
 
@@ -53,7 +54,7 @@ export class NewPage {
         date: new Date().toISOString(),
         gymLocation: this.selectedGymLocation,
         photoUrl: photoUrl,
-        notes: '', // Hier das 'notes' Feld hinzufügen
+        notes: this.comment,
       };
 
       await this.logsService.addLog(newLog);

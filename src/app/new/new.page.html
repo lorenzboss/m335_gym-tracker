@@ -19,6 +19,15 @@
     </ion-item>
 
     <ion-item>
+      <ion-label>Comment</ion-label>
+      <ion-textarea
+        [(ngModel)]="comment"
+        name="comment"
+        required
+      ></ion-textarea>
+    </ion-item>
+
+    <ion-item>
       <ion-label>Foto aufnehmen</ion-label>
       <ion-button expand="full" (click)="takePhoto()">Foto</ion-button>
     </ion-item>
