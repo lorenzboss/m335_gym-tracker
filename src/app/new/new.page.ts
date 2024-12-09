@@ -1,20 +1,35 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-new',
   templateUrl: './new.page.html',
   styleUrls: ['./new.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule],
 })
-export class NewPage implements OnInit {
+export class NewPage {
+  newEntry = {
+    date: '',
+    gymLocation: '',
+    comment: '',
+  };
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
+  submitNewEntry() {
+    console.log('New Entry:', this.newEntry);
+    // Speichern des neuen Eintrags
+    this.resetForm();
   }
 
+  resetForm() {
+    this.newEntry = {
+      date: '',
+      gymLocation: '',
+      comment: '',
+    };
+  }
 }
