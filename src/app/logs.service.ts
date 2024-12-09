@@ -19,13 +19,7 @@ export class LogsService {
       throw error;
     }
 
-    return (
-      data?.map((log: any) => ({
-        ...log,
-        gymLocation: log.gym_location,
-        photoUrl: log.photo_url,
-      })) || []
-    );
+    return data;
   }
 
   async addLog(log: GymLog): Promise<void> {
