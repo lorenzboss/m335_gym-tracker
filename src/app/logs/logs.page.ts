@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
@@ -10,11 +10,12 @@ import { LogsService } from '../logs.service';
   styleUrls: ['./logs.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule],
+  providers: [DatePipe],
 })
 export class LogsPage implements OnInit {
   logs: any[] = [];
 
-  constructor(private logsService: LogsService) {}
+  constructor(private logsService: LogsService, private datePipe: DatePipe) {}
 
   ngOnInit() {
     this.loadLogs();
@@ -36,6 +37,10 @@ export class LogsPage implements OnInit {
       console.error('Fehler beim Aktualisieren der Logs:', error);
       event.target.complete();
     }
+  }
+
+  formatDate(date: string): string {
+    return this.datePipe.transform(date, 'dd. MMM yyyy, HH:mm')!;
   }
 
   editLog(logId: string) {

@@ -12,7 +12,7 @@
   <ion-list>
     <ion-item *ngFor="let log of logs">
       <ion-label>
-        <h2>{{ log.date }}</h2>
+        <h2>{{ formatDate(log.date) }}</h2>
         <p>Gym: {{ log.gymLocation }}</p>
         <p>Kommentar: {{ log.comment }}</p>
       </ion-label>

@@ -7,7 +7,7 @@
 <ion-content>
   <form (ngSubmit)="saveLog()">
     <ion-item>
-      <ion-label>Gym Standort</ion-label>
+      <ion-label position="stacked">Gym Standort</ion-label>
       <ion-select [(ngModel)]="selectedGymLocation" name="gymLocation" required>
         <ion-select-option
           *ngFor="let location of gymLocations"
@@ -19,24 +19,51 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Comment</ion-label>
+      <ion-label position="stacked">Comment</ion-label>
       <ion-textarea
         [(ngModel)]="comment"
         name="comment"
+        placeholder="Write, what you want to remember..."
         required
       ></ion-textarea>
     </ion-item>
 
     <ion-item>
-      <ion-label>Foto aufnehmen</ion-label>
-      <ion-button expand="full" (click)="takePhoto()">Foto</ion-button>
+      <ion-label position="stacked">Datum</ion-label>
+      <ion-datetime
+        [(ngModel)]="selectedDate"
+        presentation="date"
+        name="date"
+        displayFormat="YYYY-MM-DD"
+        pickerFormat="YYYY-MM-DD"
+        required
+      ></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Zeit</ion-label>
+      <ion-datetime
+        [(ngModel)]="selectedTime"
+        presentation="time"
+        name="time"
+        displayFormat="HH:mm"
+        pickerFormat="HH:mm"
+        required
+      ></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Foto </ion-label>
+      <ion-button (click)="takePhoto()">Foto</ion-button>
     </ion-item>
 
     <ion-item *ngIf="photoUrl">
-      <ion-label>Vorschau:</ion-label>
+      <ion-label position="stacked">Vorschau</ion-label>
       <ion-img [src]="photoUrl"></ion-img>
     </ion-item>
 
-    <ion-button type="submit" expand="full">Speichern</ion-button>
+    <ion-button type="submit" expand="full" [disabled]="!isFormValid()"
+      >Speichern</ion-button
+    >
   </form>
 </ion-content>
