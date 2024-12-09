@@ -1,11 +1,19 @@
 import { createClient } from '@supabase/supabase-js';
+import { environment } from 'src/environments/environment';
 
-const supabaseUrl = 'https://xftyksprqipuzongahwh.supabase.co';
-const supabaseKey =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhmdHlrc3BycWlwdXpvbmdhaHdoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM0OTc0NjgsImV4cCI6MjA0OTA3MzQ2OH0.jq4z_onZC8-9OGmyUj4VLiK1XDe5Q2gBN7uouoZ9GY8';
+const supabaseUrl = environment.supabaseUrl;
+const supabaseKey = environment.supabaseKey;
+
+if (!supabaseUrl) {
+  throw new Error(
+    'Supabase URL is missing. Please define it in src/environments/environment.ts.'
+  );
+}
+
+if (!supabaseKey) {
+  throw new Error(
+    'Supabase Key is missing. Please define it in src/environments/environment.ts.'
+  );
+}
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
-
-if (!supabaseUrl || !supabaseKey) {
-  console.error('Supabase URL oder Key fehlen. Überprüfe deine .env-Datei.');
-}
