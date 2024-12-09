@@ -3,7 +3,9 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { IonicModule } from '@ionic/angular';
-import { GymLog, LogsService } from '../logs.service';
+import { ImageService } from '../image.service';
+import { LogsService } from '../logs.service';
+import { GymLog } from '../models/gym-log.model';
 
 @Component({
   selector: 'app-new',
@@ -22,7 +24,10 @@ export class NewPage {
   photoUrl: string | null = null;
   comment: string = '';
 
-  constructor(private logsService: LogsService) {}
+  constructor(
+    private logsService: LogsService,
+    private imageService: ImageService
+  ) {}
 
   async takePhoto() {
     const photo = await Camera.getPhoto({
@@ -42,12 +47,13 @@ export class NewPage {
       let photoUrl = null;
 
       if (this.photoUrl) {
-        // Data URL in ein File umwandeln und an uploadImage übergeben
-        const file = this.dataUrlToFile(
-          this.photoUrl,
-          `photo_${Date.now()}.png`
-        );
-        photoUrl = await this.logsService.uploadImage(file); // Das File an die uploadImage-Methode übergeben
+        const dateTime = new Date().toISOString();
+        const mimeType = this.getMimeTypeFromDataUrl(this.photoUrl);
+        const fileExtension = mimeType.split('/')[1];
+        const fileName = `${dateTime}_photo.${fileExtension}`;
+
+        const file = this.dataUrlToFile(this.photoUrl, fileName);
+        photoUrl = await this.imageService.uploadImage(file);
       }
 
       const newLog: GymLog = {
@@ -64,11 +70,13 @@ export class NewPage {
     }
   }
 
-  // Hilfsmethode: Data URL in ein File umwandeln
+  getMimeTypeFromDataUrl(dataUrl: string): string {
+    const match = dataUrl.match(/^data:(.*?);/);
+    return match ? match[1] : 'image/png';
+  }
+
   dataUrlToFile(dataUrl: string, fileName: string): File {
     const arr = dataUrl.split(',');
-
-    // Überprüfen, ob match() ein Ergebnis zurückgibt
     const match = arr[0].match(/:(.*?);/);
     if (!match) {
       throw new Error('Ungültige Data-URL: Kein MIME-Typ gefunden');
@@ -77,14 +85,12 @@ export class NewPage {
     const mime = match[1];
     const byteString = atob(arr[1]);
 
-    // Einen ArrayBuffer erzeugen und die Byte-Daten hineinschreiben
     const ab = new ArrayBuffer(byteString.length);
     const ua = new Uint8Array(ab);
     for (let i = 0; i < byteString.length; i++) {
       ua[i] = byteString.charCodeAt(i);
     }
 
-    // Das File-Objekt erstellen und zurückgeben
     return new File([ab], fileName, { type: mime });
   }
 }

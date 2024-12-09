@@ -1,13 +1,6 @@
 import { Injectable } from '@angular/core';
+import { GymLog } from './models/gym-log.model';
 import { supabase } from './supabase.service';
-
-export interface GymLog {
-  id?: string;
-  date: string;
-  gymLocation: string;
-  photoUrl: string | null;
-  notes: string;
-}
 
 @Injectable({
   providedIn: 'root',
@@ -26,14 +19,13 @@ export class LogsService {
       throw error;
     }
 
-    // Mapping der Felder
-    const mappedData = data?.map((log: any) => ({
-      ...log,
-      gymLocation: log.gym_location,
-      photoUrl: log.photo_url,
-    }));
-
-    return mappedData || [];
+    return (
+      data?.map((log: any) => ({
+        ...log,
+        gymLocation: log.gym_location,
+        photoUrl: log.photo_url,
+      })) || []
+    );
   }
 
   async addLog(log: GymLog): Promise<void> {
@@ -69,35 +61,5 @@ export class LogsService {
       console.error('Error deleting log:', error);
       throw error;
     }
-  }
-
-  async uploadImage(file: File): Promise<string> {
-    const fileName = `${Date.now()}-${file.name}`;
-
-    // Bild hochladen
-    const { data, error } = await supabase.storage
-      .from('gym-photos')
-      .upload(fileName, file, {
-        cacheControl: '3600',
-        upsert: false,
-      });
-
-    if (error) {
-      console.error('Error uploading image:', error);
-      throw error;
-    }
-
-    // Öffentliche URL abrufen
-    const { data: publicData } = await supabase.storage
-      .from('images')
-      .getPublicUrl(fileName);
-
-    if (!publicData) {
-      const publicError = new Error('Failed to retrieve public URL');
-      console.error('Error getting public URL:', publicError);
-      throw publicError;
-    }
-
-    return publicData.publicUrl;
   }
 }
