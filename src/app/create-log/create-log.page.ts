@@ -67,6 +67,8 @@ export class CreateLogPage {
       await this.logsService.addLog(newLog);
       console.log('Log erfolgreich erstellt!');
 
+      this.resetForm();
+
       this.router.navigate(['/tabs/logs'], { queryParams: { refresh: true } });
     } catch (error) {
       console.error('Fehler beim Speichern des Logs:', error);
@@ -86,6 +88,14 @@ export class CreateLogPage {
     } catch (error) {
       console.error('Fehler beim Aufnehmen des Fotos:', error);
     }
+  }
+
+  resetForm(): void {
+    this.selectedGymLocation = '';
+    this.photoUrl = null;
+    this.comment = '';
+    this.selectedDate = '';
+    this.selectedTime = '';
   }
 
   isFormValid(): boolean {
