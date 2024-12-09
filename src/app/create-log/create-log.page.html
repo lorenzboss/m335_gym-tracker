@@ -1,10 +1,15 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Neuer Log</ion-title>
+    <ion-title>Create new Log</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Create new Log</ion-title>
+    </ion-toolbar>
+  </ion-header>
   <form (ngSubmit)="saveLog()">
     <ion-item>
       <ion-label position="stacked">Gym Standort</ion-label>

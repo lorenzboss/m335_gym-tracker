@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { IonicModule } from '@ionic/angular';
 import { ImageService } from '../image.service';
@@ -33,7 +34,8 @@ export class CreateLogPage {
 
   constructor(
     private logsService: LogsService,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private router: Router
   ) {}
 
   async saveLog(): Promise<void> {
@@ -64,6 +66,8 @@ export class CreateLogPage {
 
       await this.logsService.addLog(newLog);
       console.log('Log erfolgreich erstellt!');
+
+      this.router.navigate(['/tabs/logs'], { queryParams: { refresh: true } });
     } catch (error) {
       console.error('Fehler beim Speichern des Logs:', error);
     }
