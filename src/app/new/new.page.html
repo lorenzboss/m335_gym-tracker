@@ -1,32 +1,33 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Neuer Eintrag</ion-title>
+    <ion-title>Neuer Log</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form (submit)="submitNewEntry()">
+  <form (ngSubmit)="saveLog()">
     <ion-item>
-      <ion-label position="floating">Datum</ion-label>
-      <ion-datetime [(ngModel)]="newEntry.date" name="date"></ion-datetime>
+      <ion-label>Gym Standort</ion-label>
+      <ion-select [(ngModel)]="selectedGymLocation" name="gymLocation" required>
+        <ion-select-option
+          *ngFor="let location of gymLocations"
+          [value]="location"
+        >
+          {{ location }}
+        </ion-select-option>
+      </ion-select>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Gym-Standort</ion-label>
-      <ion-input
-        [(ngModel)]="newEntry.gymLocation"
-        name="gymLocation"
-      ></ion-input>
+      <ion-label>Foto aufnehmen</ion-label>
+      <ion-button expand="full" (click)="takePhoto()">Foto</ion-button>
     </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Kommentar</ion-label>
-      <ion-textarea
-        [(ngModel)]="newEntry.comment"
-        name="comment"
-      ></ion-textarea>
+    <ion-item *ngIf="photoUrl">
+      <ion-label>Vorschau:</ion-label>
+      <ion-img [src]="photoUrl"></ion-img>
     </ion-item>
 
-    <ion-button expand="block" type="submit">Speichern</ion-button>
+    <ion-button type="submit" expand="full">Speichern</ion-button>
   </form>
 </ion-content>
