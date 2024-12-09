@@ -1,13 +1,24 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>logs</ion-title>
+    <ion-title>Gym Logs</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">logs</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="refreshLogs($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list>
+    <ion-item *ngFor="let log of logs">
+      <ion-label>
+        <h2>{{ log.date }}</h2>
+        <p>Gym: {{ log.gymLocation }}</p>
+        <p>Kommentar: {{ log.comment }}</p>
+      </ion-label>
+      <ion-button fill="outline" slot="end" (click)="editLog(log.id)"
+        >Bearbeiten</ion-button
+      >
+    </ion-item>
+  </ion-list>
 </ion-content>
