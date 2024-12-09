@@ -8,13 +8,13 @@ import { LogsService } from '../logs.service';
 import { GymLog } from '../models/gym-log.model';
 
 @Component({
-  selector: 'app-new',
-  templateUrl: './new.page.html',
-  styleUrls: ['./new.page.scss'],
+  selector: 'app-create-log',
+  templateUrl: './create-log.page.html',
+  styleUrls: ['./create-log.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule],
 })
-export class NewPage {
+export class CreateLogPage {
   selectedGymLocation: string = '';
   gymLocations: string[] = [
     'Fitness Studio Basel',

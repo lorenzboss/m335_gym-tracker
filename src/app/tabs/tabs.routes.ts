@@ -17,8 +17,9 @@ export const routes: Routes = [
           import('../logs/logs.page').then((m) => m.LogsPage),
       },
       {
-        path: 'new',
-        loadComponent: () => import('../new/new.page').then((m) => m.NewPage),
+        path: 'create-log',
+        loadComponent: () =>
+          import('../create-log/create-log.page').then((m) => m.CreateLogPage),
       },
       {
         path: 'settings',
