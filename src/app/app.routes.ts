@@ -24,4 +24,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./settings/settings.page').then((m) => m.SettingsPage),
   },
+  {
+    path: 'edit-log',
+    loadComponent: () =>
+      import('./edit-log/edit-log.page').then((m) => m.EditLogPage),
+  },
 ];

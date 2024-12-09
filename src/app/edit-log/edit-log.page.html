@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Bearbeite Log</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Schliessen</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="saveChanges()">
+    <ion-item>
+      <ion-label position="stacked">Gym Standort</ion-label>
+      <ion-input
+        [(ngModel)]="updatedLog.gym_location"
+        name="gymLocation"
+        placeholder="Standort eingeben"
+        required
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Kommentar</ion-label>
+      <ion-textarea
+        [(ngModel)]="updatedLog.comment"
+        name="comment"
+        placeholder="Kommentar hinzufügen"
+        required
+      ></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Datum</ion-label>
+      <ion-datetime
+        [(ngModel)]="updatedLog.date"
+        name="date"
+        presentation="date-time"
+        required
+      ></ion-datetime>
+    </ion-item>
+
+    <ion-button type="submit" expand="full">Speichern</ion-button>
+
+    <!-- Löschen Button -->
+    <ion-button expand="full" color="danger" (click)="confirmDelete()"
+      >Log Löschen</ion-button
+    >
+  </form>
+</ion-content>
