@@ -23,44 +23,43 @@ export class NewPage {
   ];
   photoUrl: string | null = null;
   comment: string = '';
+  selectedDate: string = '';
+  selectedTime: string = '';
+  today: string = new Date().toISOString().split('T')[0];
+  now: string = new Date().toLocaleTimeString('en-GB', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 
   constructor(
     private logsService: LogsService,
     private imageService: ImageService
   ) {}
 
-  async takePhoto() {
-    const photo = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl,
-      source: CameraSource.Camera,
-    });
-
-    if (photo?.dataUrl) {
-      this.photoUrl = photo.dataUrl;
+  async saveLog(): Promise<void> {
+    if (!this.isFormValid()) {
+      console.warn('Bitte Standort auswählen und Foto aufnehmen!');
+      return;
     }
-  }
 
-  async saveLog() {
     try {
-      let photoUrl = null;
-
-      if (this.photoUrl) {
-        const dateTime = new Date().toISOString();
-        const mimeType = this.getMimeTypeFromDataUrl(this.photoUrl);
-        const fileExtension = mimeType.split('/')[1];
-        const fileName = `${dateTime}_photo.${fileExtension}`;
-
-        const file = this.dataUrlToFile(this.photoUrl, fileName);
-        photoUrl = await this.imageService.uploadImage(file);
+      let photoUrl = this.photoUrl;
+      if (!photoUrl) {
+        console.error('Foto fehlt!');
+        return;
       }
 
+      photoUrl = await this.uploadPhotoWithTimestamp(photoUrl);
+
+      const datePart = this.selectedDate.split('T')[0];
+      const timePart = this.selectedTime.split('T')[1];
+      const combinedDateTime = new Date(`${datePart}T${timePart}`);
+
       const newLog: GymLog = {
-        date: new Date().toISOString(),
-        gymLocation: this.selectedGymLocation,
-        photoUrl: photoUrl,
-        notes: this.comment,
+        date: combinedDateTime,
+        gym_location: this.selectedGymLocation,
+        photo_url: photoUrl,
+        comment: this.comment,
       };
 
       await this.logsService.addLog(newLog);
@@ -70,27 +69,37 @@ export class NewPage {
     }
   }
 
-  getMimeTypeFromDataUrl(dataUrl: string): string {
-    const match = dataUrl.match(/^data:(.*?);/);
-    return match ? match[1] : 'image/png';
+  async takePhoto(): Promise<void> {
+    try {
+      const photo = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.DataUrl,
+        source: CameraSource.Camera,
+      });
+
+      this.photoUrl = photo?.dataUrl || null;
+    } catch (error) {
+      console.error('Fehler beim Aufnehmen des Fotos:', error);
+    }
   }
 
-  dataUrlToFile(dataUrl: string, fileName: string): File {
-    const arr = dataUrl.split(',');
-    const match = arr[0].match(/:(.*?);/);
-    if (!match) {
-      throw new Error('Ungültige Data-URL: Kein MIME-Typ gefunden');
-    }
+  isFormValid(): boolean {
+    return (
+      !!this.selectedGymLocation &&
+      !!this.photoUrl &&
+      !!this.selectedDate &&
+      !!this.selectedTime
+    );
+  }
 
-    const mime = match[1];
-    const byteString = atob(arr[1]);
+  private async uploadPhotoWithTimestamp(dataUrl: string): Promise<string> {
+    const dateTime = new Date().toISOString();
+    const mimeType = this.imageService.getMimeTypeFromDataUrl(dataUrl); // Verlagerte Logik
+    const fileExtension = mimeType.split('/')[1];
+    const fileName = `${dateTime}_photo.${fileExtension}`;
+    const file = this.imageService.dataUrlToFile(dataUrl, fileName); // Verlagerte Logik
 
-    const ab = new ArrayBuffer(byteString.length);
-    const ua = new Uint8Array(ab);
-    for (let i = 0; i < byteString.length; i++) {
-      ua[i] = byteString.charCodeAt(i);
-    }
-
-    return new File([ab], fileName, { type: mime });
+    return await this.imageService.uploadImage(file);
   }
 }

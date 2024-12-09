@@ -30,4 +30,23 @@ export class ImageService {
 
     return publicData.publicUrl;
   }
+
+  getMimeTypeFromDataUrl(dataUrl: string): string {
+    const match = dataUrl.match(/^data:(.*?);/);
+    return match ? match[1] : 'image/png';
+  }
+
+  dataUrlToFile(dataUrl: string, fileName: string): File {
+    const [meta, base64Data] = dataUrl.split(',');
+    const mime = meta.match(/:(.*?);/)?.[1];
+    if (!mime) {
+      throw new Error('Ungültige Data-URL: Kein MIME-Typ gefunden');
+    }
+    const byteString = atob(base64Data);
+    const buffer = new Uint8Array(byteString.length);
+    for (let i = 0; i < byteString.length; i++) {
+      buffer[i] = byteString.charCodeAt(i);
+    }
+    return new File([buffer], fileName, { type: mime });
+  }
 }

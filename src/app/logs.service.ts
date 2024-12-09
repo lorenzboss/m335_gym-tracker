@@ -29,12 +29,8 @@ export class LogsService {
   }
 
   async addLog(log: GymLog): Promise<void> {
-    const { error } = await supabase.from('gym_logs').insert({
-      date: log.date,
-      gym_location: log.gymLocation,
-      photo_url: log.photoUrl,
-      comment: log.notes,
-    });
+    console.log('Adding log:', log);
+    const { error } = await supabase.from('gym_logs').insert(log);
 
     if (error) {
       console.error('Error adding log:', error);
