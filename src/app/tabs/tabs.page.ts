@@ -1,11 +1,6 @@
 import { Component, EnvironmentInjector, inject } from '@angular/core';
-import {
-  IonIcon,
-  IonLabel,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
-} from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
+
 import { addIcons } from 'ionicons';
 import {
   createOutline,
@@ -19,7 +14,7 @@ import {
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss'],
   standalone: true,
-  imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel],
+  imports: [IonicModule],
 })
 export class TabsPage {
   public environmentInjector = inject(EnvironmentInjector);
