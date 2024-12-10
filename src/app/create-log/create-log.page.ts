@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { IonicModule } from '@ionic/angular';
+import { addIcons } from 'ionicons';
+import { cameraOutline } from 'ionicons/icons';
 import { ImageService } from '../image.service';
 import { LogsService } from '../logs.service';
 import { GymLog } from '../models/gym-log.model';
@@ -24,19 +26,17 @@ export class CreateLogPage {
   ];
   photoUrl: string | null = null;
   comment: string = '';
-  selectedDate: string = '';
-  selectedTime: string = '';
-  today: string = new Date().toISOString().split('T')[0];
-  now: string = new Date().toLocaleTimeString('en-GB', {
-    hour: '2-digit',
-    minute: '2-digit',
-  });
+  selectedDateTime: Date = new Date();
 
   constructor(
     private logsService: LogsService,
     private imageService: ImageService,
     private router: Router
-  ) {}
+  ) {
+    addIcons({
+      cameraOutline,
+    });
+  }
 
   async saveLog(): Promise<void> {
     if (!this.isFormValid()) {
@@ -53,12 +53,8 @@ export class CreateLogPage {
 
       photoUrl = await this.uploadPhotoWithTimestamp(photoUrl);
 
-      const datePart = this.selectedDate.split('T')[0];
-      const timePart = this.selectedTime.split('T')[1];
-      const combinedDateTime = new Date(`${datePart}T${timePart}`);
-
       const newLog: GymLog = {
-        date: combinedDateTime,
+        date: this.selectedDateTime,
         gym_location: this.selectedGymLocation,
         photo_url: photoUrl,
         comment: this.comment,
@@ -94,16 +90,12 @@ export class CreateLogPage {
     this.selectedGymLocation = '';
     this.photoUrl = null;
     this.comment = '';
-    this.selectedDate = '';
-    this.selectedTime = '';
+    this.selectedDateTime = new Date();
   }
 
   isFormValid(): boolean {
     return (
-      !!this.selectedGymLocation &&
-      !!this.photoUrl &&
-      !!this.selectedDate &&
-      !!this.selectedTime
+      !!this.selectedGymLocation && !!this.photoUrl && !!this.selectedDateTime
     );
   }
 

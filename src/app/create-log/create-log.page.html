@@ -12,8 +12,13 @@
   </ion-header>
   <form (ngSubmit)="saveLog()">
     <ion-item>
-      <ion-label position="stacked">Gym Standort</ion-label>
-      <ion-select [(ngModel)]="selectedGymLocation" name="gymLocation" required>
+      <ion-select
+        [(ngModel)]="selectedGymLocation"
+        name="gymLocation"
+        label="Gym Standort"
+        placeholder="Dein Standort..."
+        required
+      >
         <ion-select-option
           *ngFor="let location of gymLocations"
           [value]="location"
@@ -34,32 +39,20 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="stacked">Datum</ion-label>
-      <ion-datetime
-        [(ngModel)]="selectedDate"
-        presentation="date"
-        name="date"
-        displayFormat="YYYY-MM-DD"
-        pickerFormat="YYYY-MM-DD"
-        required
-      ></ion-datetime>
+      <ion-label>Datum</ion-label>
+      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime id="datetime"></ion-datetime>
+        </ng-template>
+      </ion-modal>
     </ion-item>
 
     <ion-item>
-      <ion-label position="stacked">Zeit</ion-label>
-      <ion-datetime
-        [(ngModel)]="selectedTime"
-        presentation="time"
-        name="time"
-        displayFormat="HH:mm"
-        pickerFormat="HH:mm"
-        required
-      ></ion-datetime>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Foto </ion-label>
-      <ion-button (click)="takePhoto()">Foto</ion-button>
+      <ion-label>Foto</ion-label>
+      <ion-button (click)="takePhoto()" size="default">
+        <ion-icon name="camera-outline"></ion-icon>
+      </ion-button>
     </ion-item>
 
     <ion-item *ngIf="photoUrl">
