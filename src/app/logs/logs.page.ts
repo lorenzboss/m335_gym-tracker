@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, IonicModule, ModalController } from '@ionic/angular';
+import { addIcons } from 'ionicons';
+import { pencilOutline, trashOutline } from 'ionicons/icons';
 import { EditLogPage } from '../edit-log/edit-log.page';
 import { LogsService } from '../logs.service';
 import { GymLog } from '../models/gym-log.model';
@@ -25,7 +27,12 @@ export class LogsPage implements OnInit {
     private alertCtrl: AlertController,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    addIcons({
+      pencilOutline,
+      trashOutline,
+    });
+  }
 
   ngOnInit() {
     this.loadLogs();
@@ -55,12 +62,12 @@ export class LogsPage implements OnInit {
       await this.loadLogs();
 
       if (event) {
-        event.target.complete(); // Das Event beenden, wenn es existiert
+        event.target.complete();
       }
     } catch (error) {
       console.error('Fehler beim Aktualisieren der Logs:', error);
       if (event) {
-        event.target.complete(); // Das Event auch im Fehlerfall beenden
+        event.target.complete();
       }
     }
   }
@@ -71,14 +78,15 @@ export class LogsPage implements OnInit {
 
     const modal = await this.modalController.create({
       component: EditLogPage,
-      componentProps: { log }, // Übergabe der Log-Daten
+      componentProps: { log },
     });
 
     modal.onDidDismiss().then(async (result: { data?: GymLog | null }) => {
       if (result.data) {
         try {
           await this.logsService.updateLog(logId, result.data);
-          await this.refreshLogs(); // Logs neu laden, um die Änderungen anzuzeigen
+          console.log('Log erfolgreich aktualisiert!');
+          await this.refreshLogs();
         } catch (error) {
           console.error('Fehler beim Aktualisieren des Logs:', error);
         }
@@ -87,16 +95,38 @@ export class LogsPage implements OnInit {
     await modal.present();
   }
 
-  async deleteLog(logId: string) {
+  formatDate(date: Date): string {
+    return this.datePipe.transform(date, 'dd. MMM yyyy - HH:mm')!;
+  }
+
+  async confirmDelete(id: string) {
+    const alert = await this.alertCtrl.create({
+      header: 'Log löschen?',
+      message: 'Bist du sicher, dass du dieses Log löschen möchtest?',
+      buttons: [
+        {
+          text: 'Abbrechen',
+          role: 'cancel',
+          cssClass: 'secondary',
+        },
+        {
+          text: 'Löschen',
+          handler: async () => {
+            await this.performDeleteLog(id);
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  private async performDeleteLog(id: string) {
     try {
-      await this.logsService.deleteLog(logId);
-      await this.refreshLogs(); // Logs neu laden, um das gelöschte Log zu entfernen
+      await this.logsService.deleteLog(id);
+      await this.refreshLogs();
     } catch (error) {
       console.error('Fehler beim Löschen des Logs:', error);
     }
-  }
-
-  formatDate(date: Date): string {
-    return this.datePipe.transform(date, 'dd. MMM yyyy, HH:mm')!;
   }
 }

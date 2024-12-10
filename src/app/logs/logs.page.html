@@ -16,15 +16,30 @@
   </ion-refresher>
 
   <ion-list>
-    <ion-item *ngFor="let log of logs">
-      <ion-label>
-        <h2>{{ formatDate(log.date) }}</h2>
-        <p>Gym: {{ log.gym_location }}</p>
-        <p>Kommentar: {{ log.comment }}</p>
-      </ion-label>
-      <ion-button fill="outline" slot="end" (click)="editLog(log.id!)"
-        >Bearbeiten</ion-button
-      >
-    </ion-item>
+    <ion-item-sliding *ngFor="let log of logs">
+      <ion-item>
+        <ion-label>
+          <h2>{{ formatDate(log.date) }}</h2>
+          <p>Gym: {{ log.gym_location }}</p>
+          <p>Kommentar: {{ log.comment }}</p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item-options>
+        <ion-item-option
+          (click)="confirmDelete(log.id!)"
+          color="danger"
+          class="ion-padding"
+        >
+          <ion-icon size="large" icon="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+
+      <ion-item-options side="start">
+        <ion-item-option (click)="editLog(log.id!)" class="ion-padding">
+          <ion-icon size="large" icon="pencil-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 </ion-content>
