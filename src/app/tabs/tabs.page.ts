@@ -1,6 +1,5 @@
 import { Component, EnvironmentInjector, inject } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-
 import { addIcons } from 'ionicons';
 import {
   createOutline,
