@@ -11,12 +11,18 @@
   <form (ngSubmit)="saveChanges()">
     <ion-item>
       <ion-label position="stacked">Gym Standort</ion-label>
-      <ion-input
+      <ion-select
         [(ngModel)]="updatedLog.gym_location"
         name="gymLocation"
-        placeholder="Standort eingeben"
         required
-      ></ion-input>
+      >
+        <ion-select-option
+          *ngFor="let location of gymLocations"
+          [value]="location"
+        >
+          {{ location }}
+        </ion-select-option>
+      </ion-select>
     </ion-item>
 
     <ion-item>
@@ -35,15 +41,22 @@
         [(ngModel)]="updatedLog.date"
         name="date"
         presentation="date-time"
+        class="ion-margin"
         required
-      ></ion-datetime>
+      >
+      </ion-datetime>
     </ion-item>
 
-    <ion-button type="submit" expand="full">Speichern</ion-button>
-
-    <!-- Löschen Button -->
-    <ion-button expand="full" color="danger" (click)="confirmDelete()"
-      >Log Löschen</ion-button
-    >
+    <ion-item lines="none">
+      <ion-button
+        slot="end"
+        class="ion-margin"
+        type="submit"
+        color="primary"
+        size="default"
+      >
+        Speichern
+      </ion-button>
+    </ion-item>
   </form>
 </ion-content>

@@ -1,7 +1,10 @@
-// edit-log.page.ts
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlertController, IonicModule, ModalController } from '@ionic/angular';
+import { addIcons } from 'ionicons';
+import { trashOutline } from 'ionicons/icons';
+import { LogsService } from '../logs.service';
 import { GymLog } from '../models/gym-log.model';
 
 @Component({
@@ -14,11 +17,22 @@ import { GymLog } from '../models/gym-log.model';
 export class EditLogPage {
   @Input() log!: GymLog;
   updatedLog: Partial<GymLog> = {};
+  gymLocations: string[] = [
+    'Fitness Studio Basel',
+    'Gym Zürich',
+    'CrossFit Bern',
+  ];
 
   constructor(
     private modalCtrl: ModalController,
-    private alertCtrl: AlertController
-  ) {}
+    private alertCtrl: AlertController,
+    private logsService: LogsService,
+    private router: Router
+  ) {
+    addIcons({
+      trashOutline,
+    });
+  }
 
   ngOnInit() {
     this.updatedLog = { ...this.log };
@@ -30,33 +44,5 @@ export class EditLogPage {
 
   saveChanges() {
     this.modalCtrl.dismiss(this.updatedLog);
-  }
-
-  // Bestätigungsdialog für das Löschen
-  async confirmDelete() {
-    const alert = await this.alertCtrl.create({
-      header: 'Log löschen?',
-      message: 'Bist du sicher, dass du dieses Log löschen möchtest?',
-      buttons: [
-        {
-          text: 'Abbrechen',
-          role: 'cancel',
-          cssClass: 'secondary',
-        },
-        {
-          text: 'Löschen',
-          handler: () => {
-            this.deleteLog();
-          },
-        },
-      ],
-    });
-
-    await alert.present();
-  }
-
-  // Log löschen
-  deleteLog() {
-    this.modalCtrl.dismiss(null, 'deleted'); // Schickt 'deleted' als Rückgabewert
   }
 }
