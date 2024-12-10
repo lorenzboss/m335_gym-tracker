@@ -11,25 +11,67 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-card>
+  <ion-card class="ion-margin">
     <ion-card-header>
-      <ion-card-title>Settings</ion-card-title>
+      <ion-card-title>Profile Preferences</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-item>
         <ion-label>Dark Mode</ion-label>
-        <ion-toggle slot="end"></ion-toggle>
+        <ion-toggle
+          [(ngModel)]="darkMode"
+          (ionChange)="toggleDarkMode()"
+          slot="end"
+        ></ion-toggle>
       </ion-item>
       <ion-item>
         <ion-label>Notifications</ion-label>
-        <ion-toggle slot="end"></ion-toggle>
+        <ion-toggle
+          [(ngModel)]="notificationsEnabled"
+          (ionChange)="toggleNotifications()"
+          slot="end"
+        ></ion-toggle>
+      </ion-item>
+      <ion-item *ngIf="notificationsEnabled">
+        <ion-label>Notification Frequency</ion-label>
+        <ion-select
+          [(ngModel)]="notificationFrequency"
+          (ionChange)="setNotificationFrequency()"
+        >
+          <ion-select-option value="daily">Daily</ion-select-option>
+          <ion-select-option value="weekly">Weekly</ion-select-option>
+          <ion-select-option value="monthly">Monthly</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="ion-margin">
+    <ion-card-header>
+      <ion-card-title>Information</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Version</ion-label>
+        <ion-note slot="end">1.0.0</ion-note>
       </ion-item>
       <ion-item>
-        <ion-label>Language</ion-label>
-        <ion-select slot="end">
-          <ion-select-option value="en">English</ion-select-option>
-          <ion-select-option value="de">Deutsch</ion-select-option>
-        </ion-select>
+        <ion-label>Contact me:</ion-label>
+        <a href="mailto:lorenzboss7@gmail.com">{{"lorenzboss7@gmail.com"}}</a>
+      </ion-item>
+      <ion-item>
+        <ion-label>Go to my Portfolio!</ion-label>
+        <a href="https://me.lorenzboss.com" target="_blank"
+          >me.lorenzboss.com</a
+        >
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <p>
+            This is a simple Ionic App that allows you to keep track of your
+            daily activities.
+          </p>
+        </ion-label>
       </ion-item>
     </ion-card-content>
   </ion-card>
