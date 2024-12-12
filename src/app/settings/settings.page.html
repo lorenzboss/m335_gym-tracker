@@ -20,16 +20,14 @@
         <ion-label>Dark Mode</ion-label>
         <ion-toggle
           [(ngModel)]="darkMode"
-          (ionChange)="toggleDarkMode()"
-          slot="end"
+          (ionChange)="toggleDarkMode($event.detail.checked)"
         ></ion-toggle>
       </ion-item>
       <ion-item>
         <ion-label>Notifications</ion-label>
         <ion-toggle
           [(ngModel)]="notificationsEnabled"
-          (ionChange)="toggleNotifications()"
-          slot="end"
+          (ionChange)="toggleNotifications($event.detail.checked)"
         ></ion-toggle>
       </ion-item>
       <ion-item *ngIf="notificationsEnabled">
