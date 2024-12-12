@@ -113,6 +113,9 @@
                   </ion-card-content>
                 </ion-card>
               </ion-item>
+              <ion-item *ngIf="pendingNotifications.length === 0">
+                <ion-label>There are no planned notifications!</ion-label>
+              </ion-item>
             </ion-list>
           </ion-content>
         </ng-template>
