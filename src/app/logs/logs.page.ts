@@ -28,10 +28,7 @@ export class LogsPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    addIcons({
-      pencilOutline,
-      trashOutline,
-    });
+    addIcons({ pencilOutline, trashOutline });
   }
 
   ngOnInit() {
