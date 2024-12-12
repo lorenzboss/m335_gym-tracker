@@ -19,6 +19,21 @@ export class GymService {
     return data;
   }
 
+  async getGymById(id: string): Promise<Gym | null> {
+    const { data, error } = await supabase
+      .from('gyms')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      console.error('Error fetching gym by ID:', error);
+      return null;
+    }
+
+    return data;
+  }
+
   async addGym(gym: Gym): Promise<void> {
     const { error } = await supabase.from('gyms').insert(gym);
 

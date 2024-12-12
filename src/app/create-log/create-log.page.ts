@@ -6,9 +6,11 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { cameraOutline } from 'ionicons/icons';
+import { GymService } from '../gym.service';
 import { ImageService } from '../image.service';
 import { LogsService } from '../logs.service';
 import { GymLog } from '../models/gym-log.model';
+import { Gym } from '../models/gym.model';
 
 @Component({
   selector: 'app-create-log',
@@ -18,17 +20,14 @@ import { GymLog } from '../models/gym-log.model';
   imports: [IonicModule, CommonModule, FormsModule],
 })
 export class CreateLogPage {
+  gyms: Gym[] = [];
   selectedGymLocation: string = '';
-  gymLocations: string[] = [
-    'Fitness Studio Basel',
-    'Gym Zürich',
-    'CrossFit Bern',
-  ];
   photoUrl: string | null = null;
   comment: string = '';
   selectedDateTime: Date = new Date();
 
   constructor(
+    private gymService: GymService,
     private logsService: LogsService,
     private imageService: ImageService,
     private router: Router
@@ -36,6 +35,10 @@ export class CreateLogPage {
     addIcons({
       cameraOutline,
     });
+  }
+
+  async ngOnInit() {
+    this.gyms = await this.gymService.getGyms();
   }
 
   async saveLog(): Promise<void> {

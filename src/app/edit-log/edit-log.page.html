@@ -12,11 +12,8 @@
     <ion-item>
       <ion-label position="stacked">Gym Standort</ion-label>
       <ion-select [(ngModel)]="updatedLog.gym_id" name="gymLocation" required>
-        <ion-select-option
-          *ngFor="let location of gymLocations"
-          [value]="location"
-        >
-          {{ location }}
+        <ion-select-option *ngFor="let gym of gyms" [value]="gym.id">
+          {{ gym.name }}
         </ion-select-option>
       </ion-select>
     </ion-item>
