@@ -21,6 +21,7 @@
         <ion-toggle
           [(ngModel)]="darkMode"
           (ionChange)="toggleDarkMode($event.detail.checked)"
+          slot="end"
         ></ion-toggle>
       </ion-item>
       <ion-item>
@@ -28,6 +29,7 @@
         <ion-toggle
           [(ngModel)]="notificationsEnabled"
           (ionChange)="toggleNotifications($event.detail.checked)"
+          slot="end"
         ></ion-toggle>
       </ion-item>
       <ion-item *ngIf="notificationsEnabled">
@@ -66,8 +68,8 @@
       <ion-item>
         <ion-label>
           <p>
-            This is a simple Ionic App that allows you to keep track of your
-            daily activities.
+            This Ionic App helps you track your training exercises with gym
+            logs.
           </p>
         </ion-label>
       </ion-item>
