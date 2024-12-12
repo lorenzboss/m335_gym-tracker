@@ -6,8 +6,10 @@ import { AlertController, IonicModule, ModalController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { pencilOutline, trashOutline } from 'ionicons/icons';
 import { EditLogPage } from '../edit-log/edit-log.page';
+import { GymService } from '../gym.service';
 import { LogsService } from '../logs.service';
 import { GymLog } from '../models/gym-log.model';
+import { Gym } from '../models/gym.model';
 
 @Component({
   selector: 'app-logs',
@@ -18,10 +20,12 @@ import { GymLog } from '../models/gym-log.model';
   providers: [DatePipe],
 })
 export class LogsPage implements OnInit {
+  gyms: Gym[] = [];
   logs: GymLog[] = [];
 
   constructor(
     private logsService: LogsService,
+    private gymService: GymService,
     private datePipe: DatePipe,
     private modalController: ModalController,
     private alertCtrl: AlertController,
@@ -33,10 +37,11 @@ export class LogsPage implements OnInit {
 
   ngOnInit() {
     this.loadLogs();
+    this.loadGyms();
 
     this.route.queryParams.subscribe((params) => {
       if (params['refresh']) {
-        this.refreshLogs();
+        this.refresh();
 
         this.router.navigate([], {
           queryParams: { refresh: null },
@@ -54,9 +59,18 @@ export class LogsPage implements OnInit {
     }
   }
 
-  async refreshLogs(event?: any) {
+  async loadGyms() {
+    try {
+      this.gyms = await this.gymService.getGyms();
+    } catch (error) {
+      console.error('Fehler beim Laden der Gyms:', error);
+    }
+  }
+
+  async refresh(event?: any) {
     try {
       await this.loadLogs();
+      await this.loadGyms();
 
       if (event) {
         event.target.complete();
@@ -83,7 +97,7 @@ export class LogsPage implements OnInit {
         try {
           await this.logsService.updateLog(logId, result.data);
           console.log('Log erfolgreich aktualisiert!');
-          await this.refreshLogs();
+          await this.refresh();
         } catch (error) {
           console.error('Fehler beim Aktualisieren des Logs:', error);
         }
@@ -121,9 +135,14 @@ export class LogsPage implements OnInit {
   private async performDeleteLog(id: string) {
     try {
       await this.logsService.deleteLog(id);
-      await this.refreshLogs();
+      await this.refresh();
     } catch (error) {
       console.error('Fehler beim Löschen des Logs:', error);
     }
+  }
+
+  getGymName(gymId: string): string | undefined {
+    const gym = this.gyms.find((gym) => gym.id == gymId);
+    return gym?.name;
   }
 }
