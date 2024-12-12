@@ -51,7 +51,7 @@ export class SettingsPage implements OnInit {
     }
   }
 
-  async refreshLogs(event?: any) {
+  async refresh(event?: any) {
     try {
       await this.loadGyms();
 
