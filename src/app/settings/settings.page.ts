@@ -155,14 +155,37 @@ export class SettingsPage implements OnInit {
     }
   }
 
-  async deleteGym(id: string) {
-    if (confirm('Are you sure you want to delete this gym?')) {
-      try {
-        await this.gymService.deleteGym(id);
-        await this.loadGyms();
-      } catch (error) {
-        console.error('Error deleting gym:', error);
-      }
+  async openDeleteGymModal(gym: Gym) {
+    const alert = await this.alertController.create({
+      header: 'Confirm Deletion',
+      message: `Are you sure you want to delete the gym "${gym.name}"?`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Delete canceled');
+          },
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            this.deleteGym(gym.id!);
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  async deleteGym(gymId: string) {
+    try {
+      await this.gymService.deleteGym(gymId);
+      await this.loadGyms();
+    } catch (error) {
+      console.error('Error deleting gym:', error);
     }
   }
 

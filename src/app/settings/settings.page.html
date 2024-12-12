@@ -31,7 +31,11 @@
           <ion-button slot="end" (click)="openEditGymModal(gym)">
             <ion-icon icon="pencil-outline"></ion-icon>
           </ion-button>
-          <ion-button slot="end" color="danger" (click)="deleteGym(gym.id!)">
+          <ion-button
+            slot="end"
+            color="danger"
+            (click)="openDeleteGymModal(gym)"
+          >
             <ion-icon icon="trash-outline"></ion-icon>
           </ion-button>
         </ion-item>
