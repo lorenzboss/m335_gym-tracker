@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -10,7 +11,7 @@ import { GymLog } from '../models/gym-log.model';
 @Component({
   selector: 'app-edit-log',
   standalone: true,
-  imports: [IonicModule, FormsModule],
+  imports: [IonicModule, FormsModule, CommonModule],
   templateUrl: './edit-log.page.html',
   styleUrls: ['./edit-log.page.scss'],
 })
