@@ -11,6 +11,7 @@ import { GymLog } from '../../models/gym-log.model';
 import { Gym } from '../../models/gym.model';
 import { FormatDatePipe } from '../../shared/format-date.pipe';
 import { EditLogPage } from '../edit-log/edit-log.page';
+import { LogDetailsPage } from '../log-details/log-details.page';
 
 @Component({
   selector: 'app-logs',
@@ -141,5 +142,19 @@ export class LogsPage implements OnInit {
   getGymName(gymId: string): string | undefined {
     const gym = this.gyms.find((gym) => gym.id == gymId);
     return gym?.name;
+  }
+
+  async openLogDetails(logId: string) {
+    const log = this.logs.find((l) => l.id === logId);
+    if (!log) return;
+
+    const modal = await this.modalController.create({
+      component: LogDetailsPage,
+      componentProps: {
+        log: { ...log, gym_name: this.getGymName(log.gym_id) },
+      },
+    });
+
+    await modal.present();
   }
 }

@@ -17,7 +17,7 @@
 
   <ion-list>
     <ion-item-sliding *ngFor="let log of logs">
-      <ion-item>
+      <ion-item (click)="openLogDetails(log.id!)">
         <ion-label>
           <h2>{{ log.date | formatDate }}</h2>
           <p>Gym: {{ getGymName(log.gym_id) || 'Gym nicht gefunden' }}</p>
