@@ -10,6 +10,6 @@ export class FormatDatePipe implements PipeTransform {
 
   transform(value: Date | string | null | undefined): string {
     if (!value) return ''; // Leerer String bei undefined, null oder falsy-Werten
-    return this.datePipe.transform(value, 'dd. MMM yyyy - HH:mm') || '';
+    return this.datePipe.transform(value, 'dd. MMM yyyy, HH:mm') || '';
   }
 }
