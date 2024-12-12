@@ -20,8 +20,8 @@
       <ion-select
         [(ngModel)]="selectedGymLocation"
         name="gymLocation"
-        label="Gym Standort"
-        placeholder="Dein Standort..."
+        label="Gym Location"
+        placeholder="Your Location..."
         required
       >
         <ion-select-option *ngFor="let gym of gyms" [value]="gym.id">
@@ -56,19 +56,19 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Foto</ion-label>
+      <ion-label>Photo</ion-label>
       <ion-button (click)="takePhoto()">
         <ion-icon name="camera-outline"></ion-icon>
       </ion-button>
     </ion-item>
 
-    <ion-item *ngIf="photoUrl" lines="none">Vorschau</ion-item>
+    <ion-item *ngIf="photoUrl" lines="none">Preview</ion-item>
     <ion-item *ngIf="photoUrl">
       <ion-img [src]="photoUrl"></ion-img>
     </ion-item>
 
-    <ion-button type="submit" expand="full" [disabled]="!isFormValid()"
-      >Speichern</ion-button
-    >
+    <ion-button type="submit" expand="full" [disabled]="!isFormValid()">
+      Save
+    </ion-button>
   </form>
 </ion-content>

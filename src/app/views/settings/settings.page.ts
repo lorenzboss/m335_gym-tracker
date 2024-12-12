@@ -64,7 +64,7 @@ export class SettingsPage implements OnInit {
         event.target.complete();
       }
     } catch (error) {
-      console.error('Fehler beim Aktualisieren der Gyms:', error);
+      console.error('Error while updating the gyms:', error);
       if (event) {
         event.target.complete();
       }

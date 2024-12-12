@@ -1,8 +1,8 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Bearbeite Log</ion-title>
+    <ion-title>Edit log</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="dismissModal()">Schliessen</ion-button>
+      <ion-button (click)="dismissModal()">Close</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -10,7 +10,7 @@
 <ion-content>
   <form (ngSubmit)="saveChanges()">
     <ion-item>
-      <ion-label position="stacked">Gym Standort</ion-label>
+      <ion-label position="stacked">Gym location</ion-label>
       <ion-select [(ngModel)]="updatedLog.gym_id" name="gymLocation" required>
         <ion-select-option *ngFor="let gym of gyms" [value]="gym.id">
           {{ gym.name }}
@@ -19,17 +19,17 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="stacked">Kommentar</ion-label>
+      <ion-label position="stacked">Comment</ion-label>
       <ion-textarea
         [(ngModel)]="updatedLog.comment"
         name="comment"
-        placeholder="Kommentar hinzufügen"
+        placeholder="Add comment"
         required
       ></ion-textarea>
     </ion-item>
 
     <ion-item>
-      <ion-label position="stacked">Datum</ion-label>
+      <ion-label position="stacked">Date</ion-label>
       <ion-datetime
         [(ngModel)]="updatedLog.date"
         name="date"
@@ -48,7 +48,7 @@
         color="primary"
         size="default"
       >
-        Speichern
+        Save
       </ion-button>
     </ion-item>
   </form>

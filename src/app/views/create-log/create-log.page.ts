@@ -46,20 +46,20 @@ export class CreateLogPage {
     try {
       this.gyms = await this.gymService.getGyms();
     } catch (error) {
-      console.error('Fehler beim Laden der Gyms:', error);
+      console.error('An error occurred while loading the gyms:', error);
     }
   }
 
   async saveLog(): Promise<void> {
     if (!this.isFormValid()) {
-      console.warn('Bitte Standort auswählen und Foto aufnehmen!');
+      console.warn('Please select a location and take a photo!');
       return;
     }
 
     try {
       let photoUrl = this.photoUrl;
       if (!photoUrl) {
-        console.error('Foto fehlt!');
+        console.error('Photo is missing!');
         return;
       }
 
@@ -73,13 +73,13 @@ export class CreateLogPage {
       };
 
       await this.logsService.addLog(newLog);
-      console.log('Log erfolgreich erstellt!');
+      console.log('Log successfully created!');
 
       this.resetForm();
 
       this.router.navigate(['/tabs/logs'], { queryParams: { refresh: true } });
     } catch (error) {
-      console.error('Fehler beim Speichern des Logs:', error);
+      console.error('Error while saving the log:', error);
     }
   }
 
@@ -94,7 +94,7 @@ export class CreateLogPage {
 
       this.photoUrl = photo?.dataUrl || null;
     } catch (error) {
-      console.error('Fehler beim Aufnehmen des Fotos:', error);
+      console.error('Error while taking the photo:', error);
     }
   }
 
@@ -138,7 +138,7 @@ export class CreateLogPage {
         event.target.complete();
       }
     } catch (error) {
-      console.error('Fehler beim Aktualisieren der Gyms:', error);
+      console.error('Error while updating the gyms:', error);
       if (event) {
         event.target.complete();
       }

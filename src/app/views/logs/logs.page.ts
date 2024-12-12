@@ -57,7 +57,7 @@ export class LogsPage implements OnInit {
     try {
       this.logs = await this.logsService.getLogs();
     } catch (error) {
-      console.error('Fehler beim Laden der Logs:', error);
+      console.error('Error while loading the logs:', error);
     }
   }
 
@@ -65,7 +65,7 @@ export class LogsPage implements OnInit {
     try {
       this.gyms = await this.gymService.getGyms();
     } catch (error) {
-      console.error('Fehler beim Laden der Gyms:', error);
+      console.error('Error while loading the gyms:', error);
     }
   }
 
@@ -78,7 +78,7 @@ export class LogsPage implements OnInit {
         event.target.complete();
       }
     } catch (error) {
-      console.error('Fehler beim Aktualisieren der Logs:', error);
+      console.error('Error while updating the logs:', error);
       if (event) {
         event.target.complete();
       }
@@ -98,10 +98,10 @@ export class LogsPage implements OnInit {
       if (result.data) {
         try {
           await this.logsService.updateLog(logId, result.data);
-          console.log('Log erfolgreich aktualisiert!');
+          console.log('Log successfully updated!');
           await this.refresh();
         } catch (error) {
-          console.error('Fehler beim Aktualisieren des Logs:', error);
+          console.error('Error when updating the log:', error);
         }
       }
     });
@@ -110,16 +110,16 @@ export class LogsPage implements OnInit {
 
   async confirmDelete(id: string) {
     const alert = await this.alertCtrl.create({
-      header: 'Log löschen?',
-      message: 'Bist du sicher, dass du dieses Log löschen möchtest?',
+      header: 'Delete log?',
+      message: 'Are you sure you want to delete this log?',
       buttons: [
         {
-          text: 'Abbrechen',
+          text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
         },
         {
-          text: 'Löschen',
+          text: 'Delete',
           handler: async () => {
             await this.performDeleteLog(id);
           },
@@ -135,7 +135,7 @@ export class LogsPage implements OnInit {
       await this.logsService.deleteLog(id);
       await this.refresh();
     } catch (error) {
-      console.error('Fehler beim Löschen des Logs:', error);
+      console.error('Error while deleting the log:', error);
     }
   }
 

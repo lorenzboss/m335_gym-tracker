@@ -40,7 +40,7 @@ export class ImageService {
     const [meta, base64Data] = dataUrl.split(',');
     const mime = meta.match(/:(.*?);/)?.[1];
     if (!mime) {
-      throw new Error('Ungültige Data-URL: Kein MIME-Typ gefunden');
+      throw new Error('Invalid data URL: No MIME type found');
     }
     const byteString = atob(base64Data);
     const buffer = new Uint8Array(byteString.length);

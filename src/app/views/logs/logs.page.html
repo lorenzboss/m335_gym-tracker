@@ -20,8 +20,8 @@
       <ion-item (click)="openLogDetails(log.id!)">
         <ion-label>
           <h2>{{ log.date | formatDate }}</h2>
-          <p>Gym: {{ getGymName(log.gym_id) || 'Gym nicht gefunden' }}</p>
-          <p>Kommentar: {{ log.comment }}</p>
+          <p>Gym: {{ getGymName(log.gym_id) || 'Gym not found' }}</p>
+          <p>Comment: {{ log.comment }}</p>
         </ion-label>
       </ion-item>
 
