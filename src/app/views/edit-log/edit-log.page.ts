@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { trashOutline } from 'ionicons/icons';
-import { GymService } from '../gym.service';
-import { GymLog } from '../models/gym-log.model';
-import { Gym } from '../models/gym.model';
+import { GymService } from 'src/app/gym.service';
+import { GymLog } from 'src/app/models/gym-log.model';
+import { Gym } from 'src/app/models/gym.model';
 
 @Component({
   selector: 'app-edit-log',

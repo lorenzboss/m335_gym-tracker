@@ -6,11 +6,11 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { cameraOutline } from 'ionicons/icons';
-import { GymService } from '../gym.service';
-import { ImageService } from '../image.service';
-import { LogsService } from '../logs.service';
-import { GymLog } from '../models/gym-log.model';
-import { Gym } from '../models/gym.model';
+import { GymService } from 'src/app/gym.service';
+import { ImageService } from 'src/app/image.service';
+import { LogsService } from 'src/app/logs.service';
+import { GymLog } from 'src/app/models/gym-log.model';
+import { Gym } from 'src/app/models/gym.model';
 
 @Component({
   selector: 'app-create-log',

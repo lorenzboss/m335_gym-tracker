@@ -3,30 +3,34 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./tabs/tabs.routes').then((m) => m.routes),
+    loadChildren: () =>
+      import('./views/tabs/tabs.routes').then((m) => m.routes),
   },
   {
     path: 'statistics',
     loadComponent: () =>
-      import('./statistics/statistics.page').then((m) => m.StatisticsPage),
+      import('./views/statistics/statistics.page').then(
+        (m) => m.StatisticsPage
+      ),
   },
   {
     path: 'logs',
-    loadComponent: () => import('./logs/logs.page').then((m) => m.LogsPage),
+    loadComponent: () =>
+      import('./views/logs/logs.page').then((m) => m.LogsPage),
   },
   {
     path: 'create-log',
     loadComponent: () =>
-      import('./create-log/create-log.page').then((m) => m.CreateLogPage),
+      import('./views/create-log/create-log.page').then((m) => m.CreateLogPage),
   },
   {
     path: 'settings',
     loadComponent: () =>
-      import('./settings/settings.page').then((m) => m.SettingsPage),
+      import('./views/settings/settings.page').then((m) => m.SettingsPage),
   },
   {
     path: 'edit-log',
     loadComponent: () =>
-      import('./edit-log/edit-log.page').then((m) => m.EditLogPage),
+      import('./views/edit-log/edit-log.page').then((m) => m.EditLogPage),
   },
 ];
