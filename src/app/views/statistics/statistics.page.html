@@ -76,13 +76,17 @@
       <ion-card-title>Motivational Stats</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p>
+      <p *ngIf="stats.totalVisits > 0">
         Your most visited gym this month is:
         <strong>{{ stats.mostVisitedGym?.gymName }}</strong>
       </p>
-      <p>
+      <p *ngIf="stats.totalVisits > 0">
         You’ve visited the {{ stats.mostVisitedGym?.gymName }} Gym
         <strong>{{ stats.mostVisitedGym?.count }}</strong> times this month!
+      </p>
+      <p *ngIf="stats.progressThisWeek > 0">
+        You've increased your visits this week by
+        <strong>{{ stats.progressThisWeek }}%</strong> compared to last week!
       </p>
       <p>Keep it up!</p>
     </ion-card-content>

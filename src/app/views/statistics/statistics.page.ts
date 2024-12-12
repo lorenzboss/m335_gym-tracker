@@ -7,6 +7,16 @@ import { Gym } from 'src/app/models/gym.model';
 import { GymService } from 'src/app/services/gym.service';
 import { LogsService } from 'src/app/services/logs.service';
 
+type Stats = {
+  totalVisits: number;
+  visitsThisYear: number;
+  visitsThisMonth: number;
+  visitsThisWeek: number;
+  visitsPerGym: { gymName: string; count: number }[];
+  mostVisitedGym: { gymName: string; count: number };
+  progressThisWeek: number;
+};
+
 @Component({
   selector: 'app-statistics',
   templateUrl: './statistics.page.html',
@@ -17,20 +27,14 @@ import { LogsService } from 'src/app/services/logs.service';
 export class StatisticsPage {
   logs: GymLog[] = [];
   gyms: Gym[] = [];
-  stats: {
-    totalVisits: number;
-    visitsThisYear: number;
-    visitsThisMonth: number;
-    visitsThisWeek: number;
-    visitsPerGym: { gymName: string; count: number }[];
-    mostVisitedGym?: { gymName: string; count: number };
-  } = {
+  stats: Stats = {
     totalVisits: 0,
     visitsThisYear: 0,
     visitsThisMonth: 0,
     visitsThisWeek: 0,
     visitsPerGym: [],
     mostVisitedGym: { gymName: 'N/A', count: 0 },
+    progressThisWeek: 0,
   };
 
   constructor(
@@ -115,5 +119,22 @@ export class StatisticsPage {
       (prev, curr) => (prev.count > curr.count ? prev : curr),
       { gymName: 'N/A', count: 0 }
     );
+
+    const lastWeekStart = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() - now.getDay() - 7
+    );
+
+    const visitsLastWeek = this.logs.filter(
+      (log) =>
+        new Date(log.date) >= lastWeekStart && new Date(log.date) < startOfWeek
+    ).length;
+
+    const progress =
+      ((this.stats.visitsThisWeek - visitsLastWeek) / (visitsLastWeek || 1)) *
+      100;
+
+    this.stats.progressThisWeek = Math.round(progress);
   }
 }
