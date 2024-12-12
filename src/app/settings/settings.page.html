@@ -11,6 +11,42 @@
     </ion-toolbar>
   </ion-header>
 
+  <ion-refresher slot="fixed" (ionRefresh)="refreshLogs($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-card class="ion-margin">
+    <ion-card-header>
+      <ion-card-title>Gyms</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-button slot="end" expand="block" (click)="openAddGymModal()">
+          Add Gym
+        </ion-button>
+      </ion-item>
+      <ion-list>
+        <ion-item *ngFor="let gym of gyms">
+          <ion-label>{{ gym.name }}</ion-label>
+          <ion-button slot="end" (click)="openEditGymModal(gym)">
+            <ion-icon icon="pencil-outline"></ion-icon>
+          </ion-button>
+          <ion-button slot="end" color="danger" (click)="deleteGym(gym.id!)">
+            <ion-icon icon="trash-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+      <ion-item>
+        <ion-label>
+          <p>
+            These are your gyms, that you can choose from when you create a new
+            gym log!
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
   <ion-card class="ion-margin">
     <ion-card-header>
       <ion-card-title>Profile Preferences</ion-card-title>
@@ -43,6 +79,14 @@
           <ion-select-option value="monthly">Monthly</ion-select-option>
         </ion-select>
       </ion-item>
+      <ion-item>
+        <ion-label>
+          <p>
+            <strong>Important information: </strong>
+            The notification feature is not yet implemented and does not work!
+          </p>
+        </ion-label>
+      </ion-item>
     </ion-card-content>
   </ion-card>
 
@@ -53,7 +97,7 @@
     <ion-card-content>
       <ion-item>
         <ion-label>Version</ion-label>
-        <ion-note slot="end">1.0.0</ion-note>
+        <ion-label slot="end">1.0.0</ion-label>
       </ion-item>
       <ion-item>
         <ion-label>Contact me:</ion-label>
