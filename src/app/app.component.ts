@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { ThemeService } from './theme.service';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +9,14 @@ import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
   imports: [IonApp, IonRouterOutlet],
 })
 export class AppComponent {
-  constructor() {}
+  constructor(private themeService: ThemeService) {}
+
+  ngOnInit() {
+    this.initializeDarkMode();
+  }
+
+  private async initializeDarkMode() {
+    const isDarkMode = await this.themeService.getDarkMode();
+    document.documentElement.classList.toggle('ion-palette-dark', isDarkMode);
+  }
 }
