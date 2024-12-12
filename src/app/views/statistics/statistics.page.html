@@ -78,11 +78,11 @@
     <ion-card-content>
       <p *ngIf="stats.totalVisits > 0">
         Your most visited gym this month is:
-        <strong>{{ stats.mostVisitedGym?.gymName }}</strong>
+        <strong>{{ stats.mostVisitedGym.gymName }}</strong>
       </p>
       <p *ngIf="stats.totalVisits > 0">
-        You’ve visited the {{ stats.mostVisitedGym?.gymName }} Gym
-        <strong>{{ stats.mostVisitedGym?.count }}</strong> times this month!
+        You’ve visited the {{ stats.mostVisitedGym.gymName }} Gym
+        <strong>{{ stats.mostVisitedGym.count }}</strong> times this month!
       </p>
       <p *ngIf="stats.progressThisWeek > 0">
         You've increased your visits this week by

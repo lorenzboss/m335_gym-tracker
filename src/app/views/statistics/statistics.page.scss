@@ -12,3 +12,11 @@ ion-card {
 ion-list-header {
   margin-top: 1rem;
 }
+
+ion-card-title.ios {
+  font-size: 18px;
+
+  @media (max-width: 350px) {
+    font-size: 14px;
+  }
+}
