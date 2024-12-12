@@ -85,10 +85,41 @@ export class NotificationsService {
     await this.saveNotificationSettings(settings);
 
     if (enabled) {
+      await this.requestNotificationPermission();
       await this.scheduleWelcomeNotification();
       await this.scheduleRegularNotifications(frequency);
     } else {
       await this.cancelNotifications();
     }
+
+    this.checkScheduledNotifications();
+  }
+
+  async requestNotificationPermission() {
+    try {
+      const permission = await LocalNotifications.checkPermissions();
+      if (permission.display === 'granted') {
+        console.log('Notification permissions already granted.');
+        return true;
+      }
+
+      const request = await LocalNotifications.requestPermissions();
+
+      if (request.display === 'granted') {
+        console.log('Notification permissions successfully granted.');
+        return true;
+      } else {
+        console.error('Notification permissions denied.');
+        return false;
+      }
+    } catch (error) {
+      console.error('Error requesting notification permissions:', error);
+      return false;
+    }
+  }
+
+  async checkScheduledNotifications() {
+    const scheduled = await LocalNotifications.getPending();
+    console.log('notification', scheduled.notifications);
   }
 }
