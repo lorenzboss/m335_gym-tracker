@@ -37,10 +37,15 @@
 
     <ion-item>
       <ion-label>Datum</ion-label>
-      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+      <ion-datetime-button datetime="dateTimeInput"></ion-datetime-button>
       <ion-modal [keepContentsMounted]="true">
         <ng-template>
-          <ion-datetime id="datetime"></ion-datetime>
+          <ion-datetime
+            #dateTimeInput
+            id="dateTimeInput"
+            (ionChange)="onDateTimeChange($event)"
+            presentation="date-time"
+          ></ion-datetime>
         </ng-template>
       </ion-modal>
     </ion-item>
