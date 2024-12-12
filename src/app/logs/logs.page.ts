@@ -10,13 +10,14 @@ import { GymService } from '../gym.service';
 import { LogsService } from '../logs.service';
 import { GymLog } from '../models/gym-log.model';
 import { Gym } from '../models/gym.model';
+import { FormatDatePipe } from '../shared/format-date.pipe';
 
 @Component({
   selector: 'app-logs',
   templateUrl: './logs.page.html',
   styleUrls: ['./logs.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [IonicModule, CommonModule, FormsModule, FormatDatePipe],
   providers: [DatePipe],
 })
 export class LogsPage implements OnInit {
@@ -104,10 +105,6 @@ export class LogsPage implements OnInit {
       }
     });
     await modal.present();
-  }
-
-  formatDate(date: Date): string {
-    return this.datePipe.transform(date, 'dd. MMM yyyy - HH:mm')!;
   }
 
   async confirmDelete(id: string) {
