@@ -55,7 +55,7 @@ export class CreateLogPage {
 
       const newLog: GymLog = {
         date: this.selectedDateTime,
-        gym_location: this.selectedGymLocation,
+        gym_id: this.selectedGymLocation,
         photo_url: photoUrl,
         comment: this.comment,
       };

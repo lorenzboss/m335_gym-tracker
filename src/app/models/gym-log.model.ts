@@ -4,7 +4,7 @@ export type GymLog = {
   user_id?: string;
   created_at?: Date;
   date: Date;
-  gym_location: string;
+  gym_id: string;
   comment: string;
   photo_url: string;
 };

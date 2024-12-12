@@ -11,11 +11,7 @@
   <form (ngSubmit)="saveChanges()">
     <ion-item>
       <ion-label position="stacked">Gym Standort</ion-label>
-      <ion-select
-        [(ngModel)]="updatedLog.gym_location"
-        name="gymLocation"
-        required
-      >
+      <ion-select [(ngModel)]="updatedLog.gym_id" name="gymLocation" required>
         <ion-select-option
           *ngFor="let location of gymLocations"
           [value]="location"
