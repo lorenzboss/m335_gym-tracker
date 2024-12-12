@@ -39,7 +39,15 @@ export class CreateLogPage {
   }
 
   async ngOnInit() {
-    this.gyms = await this.gymService.getGyms();
+    await this.loadGyms();
+  }
+
+  async loadGyms() {
+    try {
+      this.gyms = await this.gymService.getGyms();
+    } catch (error) {
+      console.error('Fehler beim Laden der Gyms:', error);
+    }
   }
 
   async saveLog(): Promise<void> {
@@ -120,5 +128,20 @@ export class CreateLogPage {
   onDateTimeChange($event: CustomEvent) {
     console.log('onDateTimeChange', $event);
     this.selectedDateTime = new Date($event.detail.value);
+  }
+
+  async refresh(event?: any) {
+    try {
+      await this.loadGyms();
+
+      if (event) {
+        event.target.complete();
+      }
+    } catch (error) {
+      console.error('Fehler beim Aktualisieren der Gyms:', error);
+      if (event) {
+        event.target.complete();
+      }
+    }
   }
 }
