@@ -10,11 +10,11 @@ import {
   pencilOutline,
   trashOutline,
 } from 'ionicons/icons';
-import { GymService } from '../../gym.service';
+import { GymService } from 'src/app/services/gym.service';
 import { Gym } from '../../models/gym.model';
-import { NotificationsService } from '../../notifications.service';
+import { NotificationsService } from '../../services/notifications.service';
+import { ThemeService } from '../../services/theme.service';
 import { FormatDatePipe } from '../../shared/format-date.pipe';
-import { ThemeService } from '../../theme.service';
 
 type Frequency = 'daily' | 'weekly' | 'monthly';
 

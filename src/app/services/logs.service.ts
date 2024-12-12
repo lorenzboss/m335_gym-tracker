@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GymLog } from './models/gym-log.model';
+import { GymLog } from '../models/gym-log.model';
 import { supabase } from './supabase.service';
 
 @Injectable({
