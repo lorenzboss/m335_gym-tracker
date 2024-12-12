@@ -64,6 +64,7 @@ export class NotificationsService {
 
     if (enabled) {
       await this.requestNotificationPermission();
+      await this.cancelNotifications();
       await this.scheduleWelcomeNotification();
       await this.scheduleRegularNotifications(frequency);
     } else {
