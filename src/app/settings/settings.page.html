@@ -53,7 +53,7 @@
 
   <ion-card class="ion-margin">
     <ion-card-header>
-      <ion-card-title>Profile Preferences</ion-card-title>
+      <ion-card-title>Theme</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-item>
@@ -64,8 +64,16 @@
           slot="end"
         ></ion-toggle>
       </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="ion-margin">
+    <ion-card-header>
+      <ion-card-title>Notifications</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
       <ion-item>
-        <ion-label>Notifications</ion-label>
+        <ion-label>Enable Notifications</ion-label>
         <ion-toggle
           [(ngModel)]="notificationsEnabled"
           (ionChange)="toggleNotifications($event.detail.checked)"
@@ -96,9 +104,9 @@
             <ion-toolbar>
               <ion-title>Notifications</ion-title>
               <ion-buttons slot="end">
-                <ion-button (click)="showPendingNotifications(false)"
-                  >Close</ion-button
-                >
+                <ion-button (click)="showPendingNotifications(false)">
+                  Close
+                </ion-button>
               </ion-buttons>
             </ion-toolbar>
           </ion-header>
