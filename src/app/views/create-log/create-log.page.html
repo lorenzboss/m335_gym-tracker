@@ -52,13 +52,13 @@
 
     <ion-item>
       <ion-label>Foto</ion-label>
-      <ion-button (click)="takePhoto()" size="default">
+      <ion-button (click)="takePhoto()">
         <ion-icon name="camera-outline"></ion-icon>
       </ion-button>
     </ion-item>
 
+    <ion-item *ngIf="photoUrl" lines="none">Vorschau</ion-item>
     <ion-item *ngIf="photoUrl">
-      <ion-label position="stacked">Vorschau</ion-label>
       <ion-img [src]="photoUrl"></ion-img>
     </ion-item>
 
