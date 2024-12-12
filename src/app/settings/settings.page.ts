@@ -1,6 +1,7 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { PendingLocalNotificationSchema } from '@capacitor/local-notifications';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import {
@@ -12,6 +13,7 @@ import {
 import { GymService } from '../gym.service';
 import { Gym } from '../models/gym.model';
 import { NotificationsService } from '../notifications.service';
+import { FormatDatePipe } from '../shared/format-date.pipe';
 import { ThemeService } from '../theme.service';
 
 type Frequency = 'daily' | 'weekly' | 'monthly';
@@ -21,13 +23,16 @@ type Frequency = 'daily' | 'weekly' | 'monthly';
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [IonicModule, CommonModule, FormsModule, FormatDatePipe],
+  providers: [DatePipe],
 })
 export class SettingsPage implements OnInit {
   gyms: Gym[] = [];
   darkMode = false;
   notificationsEnabled = false;
   notificationFrequency: Frequency = 'daily';
+  showNotificationsModal = false;
+  pendingNotifications: PendingLocalNotificationSchema[] = [];
 
   constructor(
     private gymService: GymService,
@@ -107,7 +112,7 @@ export class SettingsPage implements OnInit {
         {
           name: 'gymName',
           type: 'text',
-          value: gym.name, // Pre-fill with the current name of the gym
+          value: gym.name,
           placeholder: 'Enter new gym name',
         },
       ],
@@ -216,5 +221,12 @@ export class SettingsPage implements OnInit {
       this.notificationsEnabled,
       this.notificationFrequency
     );
+  }
+
+  async showPendingNotifications(showPendingNotifications: boolean) {
+    this.pendingNotifications =
+      await this.notificationsService.getPendingNotifications();
+
+    this.showNotificationsModal = showPendingNotifications;
   }
 }
