@@ -52,22 +52,18 @@ Gym Tracker is a simple application to help you keep track of your workouts, mon
 2. Open your browser and go to `http://localhost:8100/`
 
 ## Run the application on an emulator 
-1. Add Android as a platform:
-    ```bash
-    ionic capacitor add android
-    ```
 
-2. Build the application:
+1. Build the application:
     ```bash
     ionic build
     ```
 
-3. Sync the application with the emulator:
+2. Sync the application with the emulator:
     ```bash
     ionic capacitor sync android
     ```
 
-4. Open the application on the emulator:
+3. Open the application on the emulator:
     ```bash
     ionic capacitor run android -l --external
     ```
