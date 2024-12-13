@@ -63,7 +63,12 @@ Gym Tracker is a simple application to help you keep track of your workouts, mon
     ionic capacitor sync android
     ```
 
-3. Open the application on the emulator:
+3. Open the android app:
+    ```bash
+    ionic cap open android
+    ```
+
+4. Open the application on the emulator:
     ```bash
     ionic capacitor run android -l --external
     ```
