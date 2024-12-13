@@ -94,8 +94,17 @@ export class SettingsPage implements OnInit {
           text: 'Add',
           handler: (data) => {
             const gymName = data.gymName;
-            if (gymName) {
+            if (gymName && /^[a-zA-Z\s]+$/.test(gymName)) {
               this.addGym(gymName);
+            } else {
+              console.error('Invalid gym name. Only letters are allowed.');
+              this.alertController
+                .create({
+                  header: 'Invalid Input',
+                  message: 'Gym name can only contain letters and spaces.',
+                  buttons: ['OK'],
+                })
+                .then((alert) => alert.present());
             }
           },
         },
@@ -129,8 +138,17 @@ export class SettingsPage implements OnInit {
           text: 'Save',
           handler: (data: { gymName: any }) => {
             const newName = data.gymName;
-            if (newName) {
+            if (newName && /^[a-zA-Z\s]+$/.test(newName)) {
               this.updateGym(gym, newName);
+            } else {
+              console.error('Invalid gym name. Only letters are allowed.');
+              this.alertController
+                .create({
+                  header: 'Invalid Input',
+                  message: 'Gym name can only contain letters and spaces.',
+                  buttons: ['OK'],
+                })
+                .then((alert) => alert.present());
             }
           },
         },
